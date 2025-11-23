@@ -1,0 +1,94 @@
+/* =======================================================
+   🌑 TEMA OSCURO GENERAL
+   ======================================================= */
+.gradient-form {
+  background-color: #ffffff !important;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+/* Card moderna */
+.card {
+  background-color: #919191 !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #919191 !important;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* Panel derecho */
+.gradient-custom-2 {
+  background: linear-gradient(
+    135deg,
+    #2970b3,
+    #2970b3,
+    #2970b3
+  ) !important;
+  border-left: 1px solid #2970b3;
+}
+
+/* Títulos */
+h4,
+p,
+label {
+  color: #eaeaea !important;
+}
+
+/* =======================================================
+   ✏️ INPUTS OSCUROS ESTILO PROFESIONAL
+   ======================================================= */
+.dark-input {
+  background-color: #111 !important;
+  border: 1px solid #919191 !important;
+  padding: 12px;
+  color: #fff !important;
+  border-radius: 6px;
+  transition: border 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dark-input:focus {
+  background-color: #1d1d1d !important;
+  border-color: #b8b8b8 !important;
+  box-shadow: 0 0 8px #919191 !important;
+}
+
+.dark-input::placeholder {
+  color: #bfbfbf !important;
+}
+
+/* =======================================================
+   🔘 BOTÓN PRINCIPAL (gris #919191)
+   ======================================================= */
+.btn-gradient {
+  background-color: #919191 !important;
+  border: none !important;
+  padding: 12px 20px;
+  width: 100%;
+  color: #000 !important;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: 0.2s ease;
+}
+
+.btn-gradient:hover {
+  background-color: #ababab !important;
+  transform: scale(1.03);
+}
+
+.btn-gradient:active {
+  transform: scale(0.97);
+}
+
+/* =======================================================
+   🖼 LOGO
+   ======================================================= */
+
+
+/* =======================================================
+   📱 RESPONSIVE
+   ======================================================= */
+@media (max-width: 768px) {
+  .gradient-custom-2 {
+    display: none;
+  }
+}
