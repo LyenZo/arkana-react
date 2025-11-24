@@ -1,113 +1,59 @@
 import { useNavigate } from "react-router-dom";
-
+import Navbar from "../../assets/components/navbar";
 function Home() {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="container-fluid min-vh-100 py-4"
-      style={{ backgroundColor: "#121212", color: "white" }}
-    >
-      <div className="container">
+    <div>
+      <Navbar/>
+      <h1>Panel de Administración</h1>
+      <p>Bienvenido al sistema administrador del juego de cartas NFC.</p>
 
-        <h1 className="mb-3">Panel de Administración</h1>
-        <p style={{ color: "#ffffff" }}>
-          Bienvenido al sistema administrador del juego de cartas NFC.
-        </p>
+      <h3>Accesos rápidos</h3>
 
-        {/* Accesos rápidos */}
-        <h3 className="mt-3 mb-3">Accesos rápidos</h3>
+      <div>
+        <button onClick={() => navigate("/usuarios")}>
+          Administrar usuarios
+        </button>
 
-        <div className="row">
+        <button onClick={() => navigate("/cartas")}>
+          Administrar cartas
+        </button>
 
-          <div className="col-md-4 mb-3">
-            <button
-              className="btn w-100 py-2 btn-gradient"
-              style={{
-                border: "none",
-                color: "white",
-                fontWeight: "bold",
-                borderRadius: "10px",
-              }}
-              onClick={() => navigate("/usuarios")}
-            >
-              Administrar usuarios
-            </button>
-          </div>
+        <button onClick={() => navigate("/cartasNFC")}>
+          Administrar cartas físicas
+        </button>
 
-          <div className="col-md-4 mb-3">
-            <button
-              className="btn w-100 py-2 btn-gradient"
-              style={{
-                border: "none",
-                color: "white",
-                fontWeight: "bold",
-                borderRadius: "10px",
-              }}
-              onClick={() => navigate("/cartas")}
-            >
-              Administrar cartas
-            </button>
-          </div>
+        <button onClick={() => navigate("/partidas")}>
+          Partidas en curso
+        </button>
 
-          <div className="col-md-4 mb-3">
-            <button
-              className="btn w-100 py-2 btn-gradient"
-              style={{
-                border: "none",
-                color: "white",
-                fontWeight: "bold",
-                borderRadius: "10px",
-              }}
-              onClick={() => navigate("/sanciones")}
-            >
-              Administrar sanciones
-            </button>
-          </div>
+        <button onClick={() => navigate("/sanciones")}>
+          Administrar sanciones
+        </button>
 
+        <button onClick={() => navigate("/graficas_spark")}>
+          Graficas de Apache Spark
+        </button>
+      </div>
+
+      <div>
+        <h3>Estadísticas</h3>
+
+        <div>
+          <h4>Usuarios activos</h4>
+          <p>124</p>
         </div>
 
-        {/* Tarjetas de estadísticas */}
-        <div className="row mt-4">
-
-          <div className="col-md-4 mb-3">
-            <div
-              className="card shadow-sm"
-              style={{ backgroundColor: "#1e1e1e", color: "white", border: "none" }}
-            >
-              <div className="card-body">
-                <h5 className="card-title text-light">Usuarios activos</h5>
-                <p className="card-text display-6">124</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4 mb-3">
-            <div
-              className="card shadow-sm"
-              style={{ backgroundColor: "#1e1e1e", color: "white", border: "none" }}
-            >
-              <div className="card-body">
-                <h5 className="card-title text-light">Cartas registradas</h5>
-                <p className="card-text display-6">320</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4 mb-3">
-            <div
-              className="card shadow-sm"
-              style={{ backgroundColor: "#1e1e1e", color: "white", border: "none" }}
-            >
-              <div className="card-body">
-                <h5 className="card-title text-light">Lecturas NFC hoy</h5>
-                <p className="card-text display-6">48</p>
-              </div>
-            </div>
-          </div>
-
+        <div>
+          <h4>Cartas registradas</h4>
+          <p>320</p>
         </div>
 
+        <div>
+          <h4>Lecturas NFC hoy</h4>
+          <p>48</p>
+        </div>
       </div>
     </div>
   );
