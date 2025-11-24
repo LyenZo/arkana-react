@@ -5,9 +5,12 @@ import ProtectedRoute from "./assets/components/ProtectedRoute";
 import Usuarios from "./assets/pages/CRUDS/usuarios";
 import Cartas from "./assets/pages/CRUDS/cartas";
 import CartasNFC from "./assets/pages/CRUDS/cartas_nfc";
-import GraficaRegresion from "./assets/pages/graficas";
 import Partidas from "./assets/pages/CRUDS/partidas";
 import Sanciones from "./assets/pages/CRUDS/sanciones";
+import RegresionLineal from "./assets/pages/CRUDS/regresion_lineal";
+import RegresionMultiple from "./assets/pages/CRUDS/regresion_multiple";
+import SparkResultados from "./assets/pages/CRUDS/spark_resultados";
+import UltimosResultados from "./assets/pages/CRUDS/ultimos_resultados";
 function App() {
   return (
     <div>
@@ -16,10 +19,13 @@ function App() {
         <Route path="/" element={ <ProtectedRoute> <Home /> </ProtectedRoute>}/>
         <Route path="/usuarios" element={ <ProtectedRoute> <Usuarios /> </ProtectedRoute>}/>
         <Route path="/cartas" element={ <ProtectedRoute> <Cartas /> </ProtectedRoute>}/>
-        <Route path="/cartasNFC" element={ <ProtectedRoute> <CartasNFC /> </ProtectedRoute>}/>
-        <Route path="/graficas_spark" element={ <ProtectedRoute> <GraficaRegresion /> </ProtectedRoute>}/>
+        <Route path="/cartas_nfc" element={ <ProtectedRoute> <CartasNFC /> </ProtectedRoute>}/>
         <Route path="/partidas" element={ <ProtectedRoute> <Partidas /> </ProtectedRoute>}/>
         <Route path="/sanciones" element={ <ProtectedRoute> <Sanciones /> </ProtectedRoute>}/>
+        <Route path="/regresion_lineal" element={ <ProtectedRoute> <RegresionLineal /> </ProtectedRoute>}/>
+        <Route path="/regresion_multiple" element={ <ProtectedRoute> <RegresionMultiple/> </ProtectedRoute>}/>
+        <Route path="/spark_resultados" element={ <ProtectedRoute> <SparkResultados/> </ProtectedRoute>}/>
+        <Route path="/ultimos_resultados" element={ <ProtectedRoute> <UltimosResultados/> </ProtectedRoute>}/>
 
       </Routes>
     </div>
