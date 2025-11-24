@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
+import Navbar from "../../components/navbar";
+import "../../../styles/App.css";
 
 function CartasNFC() {
-  const [list, setList] = useState([]);
   const [cartas, setCartas] = useState([]);
+  const [catalogoCartas, setCatalogoCartas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     id: null,
@@ -15,42 +15,49 @@ function CartasNFC() {
   });
 
   const [modoEditar, setModoEditar] = useState(false);
-
-  const API = "http://127.0.0.1:5000/cartas_nfc";
-  const API_CARTAS = "http://127.0.0.1:5000/cartas";
-  const API_USUARIOS = "http://127.0.0.1:5000/usuarios";
+  const API_URL = "http://127.0.0.1:5000/cartas_nfc";
 
   useEffect(() => {
-    fetchAll();
+    fetchCartasNFC();
+    fetchCatalogoCartas();
+    fetchUsuarios();
   }, []);
 
-  const fetchAll = async () => {
-    setLoading(true);
+  const fetchCartasNFC = async () => {
     try {
-      await Promise.all([fetchList(), fetchCartas(), fetchUsuarios()]);
-    } catch {
-      setError("Error al cargar datos");
-    } finally {
-      setLoading(false);
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      setCartas(
+        data.map((c) => ({
+          id: c._id,
+          id_chip: c.id_chip,
+          id_carta: c.id_carta,
+          propietario_actual: c.propietario_actual,
+        }))
+      );
+    } catch (err) {
+      console.error("Error al cargar cartas NFC:", err);
     }
   };
 
-  const fetchList = async () => {
-    const res = await fetch(API);
-    const data = await res.json();
-    setList(data || []);
-  };
-
-  const fetchCartas = async () => {
-    const res = await fetch(API_CARTAS);
-    const data = await res.json();
-    setCartas(data || []);
+  const fetchCatalogoCartas = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:5000/cartas");
+      const data = await res.json();
+      setCatalogoCartas(data.map((c) => ({ id: c._id, nombre: c.nombre })));
+    } catch (err) {
+      console.error("Error al cargar catálogo de cartas:", err);
+    }
   };
 
   const fetchUsuarios = async () => {
-    const res = await fetch(API_USUARIOS);
-    const data = await res.json();
-    setUsuarios(data || []);
+    try {
+      const res = await fetch("http://127.0.0.1:5000/usuarios");
+      const data = await res.json();
+      setUsuarios(data.map((u) => ({ id: u._id, nickname: u.nickname })));
+    } catch (err) {
+      console.error("Error al cargar usuarios:", err);
+    }
   };
 
   const manejarCambio = (e) => {
@@ -58,177 +65,148 @@ function CartasNFC() {
   };
 
   const resetForm = () => {
-    setForm({
-      id: null,
-      id_chip: "",
-      id_carta: "",
-      propietario_actual: "",
-    });
-    setModoEditar(false);
+    setForm({ id: null, id_chip: "", id_carta: "", propietario_actual: "" });
   };
 
-  const validarForm = () => {
-    if (!form.id_chip || !form.id_carta || !form.propietario_actual) {
-      setError("Completa todos los campos");
-      return false;
-    }
-    return true;
-  };
-
-  const crear = async (e) => {
+  const crearCarta = async (e) => {
     e.preventDefault();
-    if (!validarForm()) return;
-
-    const body = {
-      id_chip: form.id_chip,
-      id_carta: form.id_carta,
-      propietario_actual: form.propietario_actual,
-    };
-
-    const res = await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      setError(err.error || "Error al crear");
-      return;
+    try {
+      const nueva = { ...form };
+      delete nueva.id;
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nueva),
+      });
+      if (!res.ok) throw new Error("Error al crear tarjeta NFC");
+      resetForm();
+      fetchCartasNFC();
+    } catch (err) {
+      console.error(err);
     }
-
-    fetchList();
-    resetForm();
   };
 
-  const cargarEdicion = (item) => {
+  const cargarEdicion = (carta) => {
     setModoEditar(true);
-    setForm({
-      id: item._id,
-      id_chip: item.id_chip,
-      id_carta: item.id_carta,
-      propietario_actual: item.propietario_actual,
-    });
+    setForm(carta);
   };
 
-  const guardar = async (e) => {
+  const guardarEdicion = async (e) => {
     e.preventDefault();
-    if (!validarForm()) return;
-
-    const body = {
-      id_chip: form.id_chip,
-      id_carta: form.id_carta,
-      propietario_actual: form.propietario_actual,
-    };
-
-    const res = await fetch(`${API}/${form.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      setError(err.error || "Error al actualizar");
-      return;
+    try {
+      const res = await fetch(`${API_URL}/${form.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Error al actualizar tarjeta NFC");
+      setModoEditar(false);
+      resetForm();
+      fetchCartasNFC();
+    } catch (err) {
+      console.error(err);
     }
-
-    fetchList();
-    resetForm();
   };
 
-  const eliminar = async (id) => {
-    if (!confirm("¿Eliminar registro?")) return;
-    await fetch(`${API}/${id}`, { method: "DELETE" });
-    fetchList();
+  const eliminarCarta = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Error al eliminar tarjeta NFC");
+      fetchCartasNFC();
+    } catch (err) {
+      console.error(err);
+    }
   };
-
-  const nombreCarta = (id) =>
-    cartas.find((c) => c._id === id)?.nombre || "—";
-
-  const nombreUsuario = (id) =>
-    usuarios.find((u) => u._id === id)?.nickname || "—";
 
   return (
-    <div>
-      <h2>Administración de Cartas NFC</h2>
+    <div className="crud-container">
+      <Navbar />
+      <h2 className="crud-title">Administración de Cartas NFC</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <form onSubmit={modoEditar ? guardar : crear}>
-        <label>ID Chip (Física):</label>
+      {/* FORMULARIO */}
+      <form
+        className="crud-form"
+        onSubmit={modoEditar ? guardarEdicion : crearCarta}
+      >
         <input
           type="text"
           name="id_chip"
+          placeholder="ID del chip NFC"
           value={form.id_chip}
           onChange={manejarCambio}
+          required
         />
 
-        <label>Carta:</label>
         <select
           name="id_carta"
           value={form.id_carta}
           onChange={manejarCambio}
+          required
         >
-          <option value="">Selecciona</option>
-          {cartas.map((c) => (
-            <option key={c._id} value={c._id}>
+          <option value="">-- Selecciona una carta --</option>
+          {catalogoCartas.map((c) => (
+            <option key={c.id} value={c.id}>
               {c.nombre}
             </option>
           ))}
         </select>
 
-        <label>Propietario actual:</label>
         <select
           name="propietario_actual"
           value={form.propietario_actual}
           onChange={manejarCambio}
         >
-          <option value="">Selecciona</option>
+          <option value="">-- Selecciona propietario --</option>
           {usuarios.map((u) => (
-            <option key={u._id} value={u._id}>
+            <option key={u.id} value={u.id}>
               {u.nickname}
             </option>
           ))}
         </select>
 
-        <button type="submit">
-          {modoEditar ? "Guardar" : "Crear"}
+        <button className="crud-btn">
+          {modoEditar ? "Guardar Cambios" : "Registrar NFC"}
         </button>
-
-        {modoEditar && (
-          <button type="button" onClick={resetForm}>
-            Cancelar
-          </button>
-        )}
       </form>
 
-      <table>
-        <thead>
-          <tr>
-            <th>ID Chip</th>
-            <th>ID Mongo</th>
-            <th>Carta</th>
-            <th>Propietario</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {list.map((item) => (
-            <tr key={item._id}>
-              <td>{item.id_chip}</td>
-              <td>{item._id}</td>
-              <td>{nombreCarta(item.id_carta)}</td>
-              <td>{nombreUsuario(item.propietario_actual)}</td>
-              <td>
-                <button onClick={() => cargarEdicion(item)}>Editar</button>
-                <button onClick={() => eliminar(item._id)}>Eliminar</button>
-              </td>
+      {/* TABLA */}
+      <div className="table-wrapper">
+        <table className="crud-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>ID Chip</th>
+              <th>Carta</th>
+              <th>Propietario</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cartas.map((c) => (
+              <tr key={c.id}>
+                <td>{c.id}</td>
+                <td>{c.id_chip}</td>
+                <td>{c.id_carta}</td>
+                <td>{c.propietario_actual}</td>
+                <td>
+                  <button
+                    className="crud-edit"
+                    onClick={() => cargarEdicion(c)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="crud-delete"
+                    onClick={() => eliminarCarta(c.id)}
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

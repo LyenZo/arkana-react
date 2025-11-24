@@ -1,0 +1,445 @@
+/* Página completa */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+/* Reset para quitar el margen por defecto del body y html */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar pegado al top */
+.navbar-container {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 2.0rem; /* Ajusta tamaño */
+  letter-spacing: 1px; /* Espaciado entre letras para estilo logo */
+  color: #2d70c9; /* Color personalizado, ajusta a tu gusto */
+  text-transform: uppercase; /* Mayúsculas para estilo logo */
+}
+
+.login-wrapper {
+  display: flex;
+  height: 100vh;
+  background: #e8eef5;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Fondo azul con ondas (lado izquierdo) */
+.login-left {
+  width: 45%;
+  height: 74%;
+  background: linear-gradient(135deg, #5ab0ff, #0066d6);
+  border-radius: 20px 0 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+}
+
+
+
+
+
+/* Logo */
+.logo-box {
+  text-align: center;
+  color: white;
+}
+
+.logo {
+  width: 300px;
+  margin-bottom: 10px;
+}
+
+/* CARD DERECHA */
+.login-right {
+  width: 40%;
+  height: 85%;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(-40px); /* Para superponer y que se vea como en la imagen */
+}
+
+.login-card {
+  background: white;
+  padding: 40px 50px;
+  border-radius: 25px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+/* Título */
+.title {
+  font-size: 32px;
+  color: #2d70c9;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Inputs estilo minimal */
+.input-modern {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 30px;
+  border: 1px solid #cfd8e3;
+  background: #e6f6ef;
+  font-size: 15px;
+}
+
+.input-modern:focus {
+  outline: none;
+  border-color: #4ca8ff;
+  box-shadow: 0 0 8px rgba(76, 168, 255, 0.5);
+}
+
+/* Forgot password */
+.forgot-container {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot-container a {
+  font-size: 12px;
+  color: #2d70c9;
+}
+
+/* Botón */
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  background: #ff900b;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.btn-login:hover {
+  background: #1f5fb3;
+}
+
+/* Signup */
+.signup {
+  font-size: 14px;
+}
+
+.signup a {
+  color: #2d70c9;
+}
+
+
+/* Contenedor principal */
+.home-container {
+  margin: 0 auto;
+  font-family: 'Montserrat', sans-serif;
+  color: #2d70c9;
+}
+
+/* Títulos principales */
+.home-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.home-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: #555;
+}
+
+/* Accesos rápidos */
+.quick-access h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Botones estilo reutilizado y mejorado */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 60px;
+}
+
+.btn-group button {
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  flex: 1 1 200px; /* mínimo 200px, flexible */
+  box-shadow: 0 4px 10px rgba(45, 112, 201, 0.3);
+}
+
+.btn-group button:hover {
+  box-shadow: 0 10px 20px rgba(31, 95, 179, 0.5);
+}
+
+/* Sección estadísticas */
+.stats-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* Tarjetas estadísticas */
+.stats-cards {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1 1 250px;
+  background-color: #82c3ff; /* mismo azul claro del login */
+  padding: 25px 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  color: #004a8f;
+}
+
+.stat-card h4 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.stat-card p {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: #0a2767;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .stats-cards {
+    flex-direction: column;
+  }
+}
+
+.navbar-container {
+  padding: 12px 30px;
+  background-color: #2d70c9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(45, 112, 201, 0.4);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-left {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-btn {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background-color: white;
+  color: #2d70c9;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.logout-btn {
+  background-color: #f44336;
+  color: white;
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.7);
+}
+
+.btn-group button {
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  flex: 1 1 200px;
+  margin: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.btn-usuarios { background-color: #2d70c9; }
+.btn-cartas { background-color: #1abc9c; }
+.btn-cartas-nfc { background-color: #e67e22; }
+.btn-partidas { background-color: #9b59b6; }
+.btn-sanciones { background-color: #e74c3c; }
+.btn-graficas { background-color: #f1c40f; }
+
+.btn-group button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.crud-container {
+  font-family: "Poppins", sans-serif;
+  background: #f4f7f9;
+  min-height: 100vh;
+}
+
+.crud-title {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  color: #333;
+}
+
+.crud-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.crud-form input,
+.crud-form select {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  min-width: 200px;
+  transition: all 0.3s ease;
+}
+
+.crud-form input:focus,
+.crud-form select:focus {
+  outline: none;
+  border-color: #2d70c9;
+  box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+}
+
+.crud-btn {
+  padding: 10px 20px;
+  background: #2d70c9;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.crud-btn:hover {
+  background: #2d70c9;
+  transform: translateY(-2px);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.crud-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.crud-table th,
+.crud-table td {
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.crud-table th {
+  background: #2d70c9;
+  color: white;
+  font-weight: 600;
+}
+
+.crud-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.crud-edit,
+.crud-delete {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin: 2px;
+}
+
+.crud-edit {
+  background: #3498db;
+  color: white;
+}
+
+.crud-edit:hover {
+  background: #2980b9;
+}
+
+.crud-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.crud-delete:hover {
+  background: #c0392b;
+}
+
+.password-cell {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.password-cell:hover {
+  filter: blur(2px);
+}
+
+.password-cell.show {
+  filter: none;
+}

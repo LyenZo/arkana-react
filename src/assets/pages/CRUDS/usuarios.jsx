@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import Navbar from "../../components/navbar";
+import "../../../styles/App.css";
 
 function Usuarios() {
+  const [mostrarContrasena, setMostrarContrasena] = useState(null);
   const [usuarios, setUsuarios] = useState([]);
   const [form, setForm] = useState({
     id: null,
@@ -15,27 +18,19 @@ function Usuarios() {
 
   const API_URL = "http://127.0.0.1:5000/usuarios";
 
-  // ==========================
-  // 1️⃣ Cargar usuarios
-  // ==========================
   useEffect(() => {
     fetchUsuarios();
   }, []);
 
   const parseFecha = (valor) => {
     if (!valor) return "";
-
-    // Caso 1: Flask devuelve { "$date": "2025-11-24T01:21:43.071Z" }
     if (typeof valor === "object" && valor.$date) {
       return new Date(valor.$date).toLocaleString();
     }
-
-    // Caso 2: Flask devuelve "2025-11-24T01:21:43.071Z"
     if (typeof valor === "string") {
       const fecha = new Date(valor);
       return isNaN(fecha) ? "" : fecha.toLocaleString();
     }
-
     return "";
   };
 
@@ -62,9 +57,6 @@ function Usuarios() {
     }
   };
 
-  // ==========================
-  // 2️⃣ Manejo de formulario
-  // ==========================
   const manejarCambio = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -81,9 +73,6 @@ function Usuarios() {
     });
   };
 
-  // ==========================
-  // 3️⃣ Crear usuario (POST)
-  // ==========================
   const crearUsuario = async (e) => {
     e.preventDefault();
     try {
@@ -111,17 +100,11 @@ function Usuarios() {
     }
   };
 
-  // ==========================
-  // 4️⃣ Cargar usuario para editar
-  // ==========================
   const cargarEdicion = (usuario) => {
     setModoEditar(true);
     setForm(usuario);
   };
 
-  // ==========================
-  // 5️⃣ Guardar edición (PUT)
-  // ==========================
   const guardarEdicion = async (e) => {
     e.preventDefault();
     try {
@@ -141,9 +124,6 @@ function Usuarios() {
     }
   };
 
-  // ==========================
-  // 6️⃣ Eliminar usuario
-  // ==========================
   const eliminarUsuario = async (id) => {
     try {
       const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
@@ -155,11 +135,12 @@ function Usuarios() {
   };
 
   return (
-    <div>
-      <h2>Administración de usuarios</h2>
+    <div className="crud-container">
+      <Navbar />
+      <h2 className="crud-title">Administración de Usuarios</h2>
 
       {/* FORMULARIO */}
-      <form onSubmit={modoEditar ? guardarEdicion : crearUsuario}>
+      <form className="crud-form" onSubmit={modoEditar ? guardarEdicion : crearUsuario}>
         <input
           type="text"
           name="nickname"
@@ -213,45 +194,55 @@ function Usuarios() {
           <option value="admin">Administrador</option>
           <option value="supervisor">Supervisor</option>
         </select>
-        <button>{modoEditar ? "Guardar Cambios" : "Agregar Usuario"}</button>
+        <button className="crud-btn">{modoEditar ? "Guardar Cambios" : "Agregar Usuario"}</button>
       </form>
 
       {/* TABLA */}
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nickname</th>
-            <th>Correo</th>
-            <th>Contraseña</th>
-            <th>Teléfono</th>
-            <th>Estado</th>
-            <th>Rol</th>
-            <th>Fecha registro</th>
-            <th>Último login</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuarios.map((u) => (
-            <tr key={u.id}>
-              <td>{u.id}</td>
-              <td>{u.nickname}</td>
-              <td>{u.correo}</td>
-              <td>{u.contraseña}</td>
-              <td>{u.telefono}</td>
-              <td>{u.estado_cuenta}</td>
-              <td>{u.rol}</td>
-              <td>{u.fecha_registro}</td>
-              <td>{u.ultimo_login}</td>
-              <td>
-                <button onClick={() => cargarEdicion(u)}>Editar</button>
-                <button onClick={() => eliminarUsuario(u.id)}>Eliminar</button>
-              </td>
+      <div className="table-wrapper">
+        <table className="crud-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nickname</th>
+              <th>Correo</th>
+              <th>Contraseña</th>
+              <th>Teléfono</th>
+              <th>Estado</th>
+              <th>Rol</th>
+              <th>Fecha registro</th>
+              <th>Último login</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {usuarios.map((u) => (
+              <tr key={u.id}>
+                <td>{u.id}</td>
+                <td>{u.nickname}</td>
+                <td>{u.correo}</td>
+                <td
+  className="password-cell"
+  onClick={() =>
+    setMostrarContrasena(mostrarContrasena === u.id ? null : u.id)
+  }
+>
+  {mostrarContrasena === u.id ? u.contraseña : u.contraseña.replace(/./g, "•")}
+</td>
+
+                <td>{u.telefono}</td>
+                <td>{u.estado_cuenta}</td>
+                <td>{u.rol}</td>
+                <td>{u.fecha_registro}</td>
+                <td>{u.ultimo_login}</td>
+                <td>
+                  <button className="crud-edit" onClick={() => cargarEdicion(u)}>Editar</button>
+                  <button className="crud-delete" onClick={() => eliminarUsuario(u.id)}>Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

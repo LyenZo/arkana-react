@@ -1,33 +1,33 @@
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import "../../styles/App.css";
 function Navbar() {
-const navigate = useNavigate();
-const cerrarSesion = () => {
+  const navigate = useNavigate();
+
+  const cerrarSesion = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("usuario");
     navigate("/login");
-};
+  };
 
-return (
-    <nav
-    style={{
-        padding: "10px",
-        background: "#eee",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center"
-    }}
-    >
+  const inicio = () => {
+    navigate("/");
+  };
+
+  return (
+    <nav className="navbar-container">
       {/* Enlaces a la izquierda */}
-    <div style={{ display: "flex", gap: "10px" }}>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-    </div>
+      <div className="navbar-left">
+        <button className="nav-btn" onClick={inicio}>
+          Inicio
+        </button>
+      </div>
 
       {/* Botón a la derecha */}
-    <button onClick={cerrarSesion}>Cerrar sesión</button>
+      <button className="nav-btn logout-btn" onClick={cerrarSesion}>
+        Cerrar sesión
+      </button>
     </nav>
-);
+  );
 }
 
 export default Navbar;
